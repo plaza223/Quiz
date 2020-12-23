@@ -11,7 +11,7 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/">{/* <Dashboard /> */}</Route>
+          <Route path="/"><DashboardMain /></Route>
           <Route path="/basicgame">{/* <BasicGame /> */}</Route>
           <Route path="/"></Route>
         </Switch>
