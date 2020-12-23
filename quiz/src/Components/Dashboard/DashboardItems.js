@@ -1,12 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 
 export class DashboardItem extends Component {
     render() {
         return (
+            <Link to={this.props.path}>
             <div className="">
-                <p>Play</p>
+                
+                <p>{this.props.name}</p>
                 
             </div>
+            </Link>
         )
     }
 }
