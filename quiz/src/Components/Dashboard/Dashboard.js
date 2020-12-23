@@ -9,7 +9,8 @@ export class Dashboard extends Component {
             <div className="dashboardMain">
                 <h1 className="dashboardMain__h1">QuizzApp</h1>
                 <div>
-                    <DashboardItem />
+                    <DashboardItem name="play" path="/basicgame"/>
+                    <DashboardItem name="settings" path="/settings"/>
                 </div>
             </div>
         )
