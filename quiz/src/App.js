@@ -1,16 +1,23 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import DashboardMain from "./Components/Dashboard/Dashboard";
 
+import { getQuestions } from "./api";
 
-
+getQuestions();
 function App() {
   return (
-    <div className="App">
-     <DashboardMain />
-    </div>
-  )
-  
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path="/">{/* <Dashboard /> */}</Route>
+          <Route path="/basicgame">{/* <BasicGame /> */}</Route>
+          <Route path="/"></Route>
+        </Switch>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
