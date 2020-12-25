@@ -1,0 +1,11 @@
+.basic-game__answer {
+  background-color: aqua;
+}
+
+.basic-game__answer--chosen-wrong {
+background-color: red;
+}
+
+.basic-game__answer--chosen-correct {
+background-color: green;
+}
