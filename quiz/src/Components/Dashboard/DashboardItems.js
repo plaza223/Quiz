@@ -5,12 +5,22 @@ import "./Dashboard.css"
 export class DashboardItem extends Component {
     render() {
         return (
-            <Link  to={this.props.path}>
-            <div className="dashboard__item">
+            <Link  to={this.props.path}  style={
+            { textDecoration: 'none' }
+            }>
                 
-                <h1>{this.props.name}</h1>
+            <div className="dashboard__container">
+                 <div className="dashboard__container__item">
                 
-            </div>
+            
+                
+                 </div>
+            <h1>{this.props.name}</h1>
+            
+            </div> 
+            
+            
+               
             </Link>
         )
     }
