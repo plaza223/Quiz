@@ -4,26 +4,29 @@ export default class Answer extends Component {
   state = {
     chosen: false,
   };
+
+  // this.props.chosenAnswer === null && this.setState({ chosen: false });
+
   render() {
     return (
       <p
         className={`basic-game__answer ${
-          this.state.chosen
-            ? `basic-game__answer--chosen-${
-                this.props.answerCorrect === "true" ? "correct" : "wrong"
-              }`
-            : "ldlls"
+          this.props.chosenAnswer === this.props.answer &&
+          `basic-game__answer--chosen-${
+            this.props.answerCorrect === "true" ? "correct" : "wrong"
+          }`
+        } ${
+          this.props.answerCorrect === "false" &&
+          this.props.answer === this.props.correctAnswer &&
+          "basic-game__answer--chosen-correct"
         }`}
         onClick={() => {
           if (this.props.answerCorrect === "pending") {
-            this.setState({ chosen: true });
+            this.props.handleChoice(this.props.answer);
             this.props.checkIfCorrect(
               this.props.answer,
               this.props.correctAnswer
             );
-            if (this.props.answer === this.props.correctAnswer) {
-              this.setState({ chosen: false });
-            }
           }
         }}
       >

@@ -6,32 +6,56 @@ import "./BasicGame.css";
 export class BasicGame extends Component {
   state = {
     questions: [],
-    level: 1,
-
+    allAnswers: [],
+    level: 0,
     answerCorrect: "pending",
     chosenAnswer: null,
   };
 
   async componentDidMount() {
     const questionsArr = await getQuestions();
-
     this.setState({
       questions: questionsArr,
+      allAnswers: questionsArr[this.state.level]?.incorrect_answers
+        ?.concat(questionsArr[this.state.level]?.correct_answer)
+        .sort(() => 0.5 - Math.random()),
     });
-    console.log("MOUNT");
   }
-  updateQuestion = () => {
-    this.setState({
-      level: this.state.level + 1,
-    });
-
+  updateQuestion = async () => {
+    if (this.state.answerCorrect === "pending") return;
+    this.state.answerCorrect === "true"
+      ? this.setState({
+          level: this.state.level + 1,
+        })
+      : this.setState({
+          level: 0,
+        });
     this.setState({
       answerCorrect: "pending",
       chosenAnswer: null,
     });
+
+    if (this.state.level > 0) {
+      this.setState({
+        allAnswers: this.state.questions[this.state.level]?.incorrect_answers
+          ?.concat(this.state.questions[this.state.level]?.correct_answer)
+          .sort(() => 0.5 - Math.random()),
+      });
+    } else {
+      const questionsArr = await getQuestions();
+      this.setState({
+        questions: questionsArr,
+        allAnswers: questionsArr[this.state.level]?.incorrect_answers
+          ?.concat(questionsArr[this.state.level]?.correct_answer)
+          .sort(() => 0.5 - Math.random()),
+      });
+    }
   };
   componentDidUpdate() {
-    this.state.answerCorrect === "true" && this.updateQuestion();
+    if (this.state.answerCorrect === "pending") return;
+    setTimeout(() => {
+      this.updateQuestion();
+    }, 2000);
   }
 
   checkIfCorrect = (answer, correctAnswer) => {
@@ -40,18 +64,22 @@ export class BasicGame extends Component {
       ? this.setState({ answerCorrect: "true" })
       : this.setState({ answerCorrect: "false" });
   };
+
+  handleChoice = (answer) => {
+    this.setState({ chosenAnswer: answer });
+  };
   render() {
-    const { questions, level, currentQuestion } = this.state;
+    const { questions, level } = this.state;
     const correctAnswer = questions[level]?.correct_answer;
     const incorrectAnswers = questions[level]?.incorrect_answers;
-    const allAnswers = incorrectAnswers?.concat(correctAnswer);
+
     let chosenAnswerColor = null;
 
     return (
       <div>
         <h1>{questions[level]?.question}</h1>
         <div>
-          {allAnswers?.map((answer) => (
+          {this.state.allAnswers?.map((answer) => (
             <Answer
               answer={answer}
               answerCorrect={this.state.answerCorrect}
@@ -59,6 +87,7 @@ export class BasicGame extends Component {
               chosenAnswer={this.state.chosenAnswer}
               checkIfCorrect={this.checkIfCorrect}
               correctAnswer={correctAnswer}
+              handleChoice={this.handleChoice}
             />
           ))}
         </div>
