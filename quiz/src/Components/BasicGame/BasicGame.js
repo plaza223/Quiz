@@ -76,9 +76,9 @@ export class BasicGame extends Component {
     let chosenAnswerColor = null;
 
     return (
-      <div>
-        <h1>{questions[level]?.question}</h1>
-        <div>
+      <div className="question__container">
+        <h1 className="question__container__h1">{questions[level]?.question}</h1>
+        <div className="question__container__answers">
           {this.state.allAnswers?.map((answer) => (
             <Answer
               answer={answer}
