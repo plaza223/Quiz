@@ -1,12 +1,39 @@
-.dashboard__item{
+
+.dasboardMain{
+    
+}
+
+.dashboard__container__item{
     box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
     width:8em;
     height:8em;
-    margin-top: 10em;
     border-radius:1em;
     background-color: white;    
 }
 
-.dashboard__item h1{
+
+
+.dashboard__container h1{
+    font-size: 1.4em;
     text-align: center;
+    
+    
+   
+}
+
+.dashboard__container{
+    text-align: center;
+}
+
+
+
+
+.dashboardMain__items{
+    margin-top: 5em;
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap:2em;
+    justify-content: center;
+    width: 100%;
+    
 }
