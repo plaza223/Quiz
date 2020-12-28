@@ -11,6 +11,9 @@ export default class Answer extends Component {
     return (
       <p
         className={`basic-game__answer ${
+          this.props.answerCorrect === "pending" &&
+          "basic-game__answer--hoverable"
+        } ${
           this.props.chosenAnswer === this.props.answer &&
           `basic-game__answer--chosen-${
             this.props.answerCorrect === "true" ? "correct" : "wrong"
@@ -30,7 +33,7 @@ export default class Answer extends Component {
           }
         }}
       >
-        {this.props.answer}
+        {decodeURIComponent(this.props.answer)}
       </p>
     );
   }

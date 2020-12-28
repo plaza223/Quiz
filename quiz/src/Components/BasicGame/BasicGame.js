@@ -77,7 +77,9 @@ export class BasicGame extends Component {
 
     return (
       <div className="question__container">
-        <h1 className="question__container__h1">{questions[level]?.question}</h1>
+        <h1 className="question__container__h1">
+          {decodeURIComponent(questions[level]?.question)}
+        </h1>
         <div className="question__container__answers">
           {this.state.allAnswers?.map((answer) => (
             <Answer

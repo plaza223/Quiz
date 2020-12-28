@@ -40,7 +40,7 @@ body{
   border-radius: 10px;
 }
 
-.basic-game__answer:hover{
+.basic-game__answer--hoverable:hover{
   background: rgb(195, 195, 11);
   color: #333;
   transform: scale(1.05, 1.2);
@@ -48,10 +48,12 @@ body{
 
 .basic-game__answer--chosen-wrong {
 background-color: red;
+transform: scale(1.05, 1.2);
 }
 
 .basic-game__answer--chosen-correct {
 background-color: green;
+transform: scale(1.05, 1.2);
 }
 
 @media(min-width: 1000px){

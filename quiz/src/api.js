@@ -2,7 +2,7 @@ export async function getQuestions() {
   let allQuestions = [];
 
   const easy = await fetch(
-    "https://opentdb.com/api.php?amount=5&type=multiple&difficulty=easy"
+    "https://opentdb.com/api.php?amount=5&type=multiple&difficulty=easy&encode=url3986"
   )
     .then((response) => response.json())
     .then((res) => {
@@ -12,7 +12,7 @@ export async function getQuestions() {
 
   // const easyQuestions = easy.map((question) => console.log(question));
   const medium = await fetch(
-    "https://opentdb.com/api.php?amount=5&type=multiple&difficulty=medium"
+    "https://opentdb.com/api.php?amount=5&type=multiple&difficulty=medium&encode=url3986"
   )
     .then((response) => response.json())
     .then((res) => {
@@ -21,7 +21,7 @@ export async function getQuestions() {
     });
 
   const hard = await fetch(
-    "https://opentdb.com/api.php?amount=5&type=multiple&difficulty=hard"
+    "https://opentdb.com/api.php?amount=5&type=multiple&difficulty=hard&encode=url3986"
   )
     .then((response) => response.json())
     .then((res) => {
