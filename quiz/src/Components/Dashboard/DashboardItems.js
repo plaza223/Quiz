@@ -11,7 +11,7 @@ export class DashboardItem extends Component {
     render() {
         
         return (
-            <Link  to={this.props.path}  style={
+            <Link className="dashboard__link"  to={this.props.path}  style={
             { textDecoration: 'none' }
             }>
                 
@@ -22,9 +22,9 @@ export class DashboardItem extends Component {
                        <img src={this.props.icon}></img>
                     </div>  
 
-                    <div className="dashboard__conatainer__h1">
-                        <h1>{this.props.name}</h1>
-                    </div>
+                    
+                        <h1 className="dashboard__link-name">{this.props.name}</h1>
+                   
                 
                  </div>
            
