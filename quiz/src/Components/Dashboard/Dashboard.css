@@ -1,29 +1,6 @@
 
-.dasboardMain{
-    
-}
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-.dashboard__container__item{
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
-    width:8em;
-    height:8em;
-    border-radius:1em;
-    background-color: white;    
-}
-
-
-
-.dashboard__container h1{
-    font-size: 1.4em;
-    text-align: center;
-    
-    
-   
-}
-
-.dashboard__container{
-    text-align: center;
-}
 
 
 
@@ -35,5 +12,72 @@
     grid-gap:2em;
     justify-content: center;
     width: 100%;
+}
+
+
+.dashboardMain__h1{
+    color: yellow;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    font-family: 'Bangers', cursive;
+    letter-spacing: 4px;
+    font-size: 4em;
+}
+
+
+
+
+
+.dashboard__container{
+   
+    width:8em;
+    height:8em;
+    border-radius:1.8em;
+    background-color:black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
     
 }
+
+
+
+.dashboard__container h1 {
+    font-size: 1.4em;
+    text-align: center;
+    color: rgb(218, 211, 211);
+    margin-top: 0.7em;
+    letter-spacing: 4px;
+    font-size: 1.6em;
+    font-family: 'Bangers', cursive;
+}
+
+
+
+
+
+
+
+.dashboard__container__icon img{
+    width: 100%;
+    margin: 0.7em 0em;
+   
+
+}
+
+.dashboard__container__icon{
+    height: 4em;
+    width: 4em;
+    margin: 0 auto;
+    
+}
+
+
+
+
+
+
+
+
