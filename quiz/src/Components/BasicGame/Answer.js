@@ -11,20 +11,20 @@ export default class Answer extends Component {
     return (
       <p
         className={`basic-game__answer ${
-          this.props.answerCorrect === "pending" &&
+          this.props.isAnswerCorrect === "pending" &&
           "basic-game__answer--hoverable"
         } ${
           this.props.chosenAnswer === this.props.answer &&
           `basic-game__answer--chosen-${
-            this.props.answerCorrect === "true" ? "correct" : "wrong"
+            this.props.isAnswerCorrect === "true" ? "correct" : "wrong"
           }`
         } ${
-          this.props.answerCorrect === "false" &&
+          this.props.isAnswerCorrect === "false" &&
           this.props.answer === this.props.correctAnswer &&
           "basic-game__answer--chosen-correct"
         }`}
         onClick={() => {
-          if (this.props.answerCorrect === "pending") {
+          if (this.props.isAnswerCorrect === "pending") {
             this.props.handleChoice(this.props.answer);
             this.props.checkIfCorrect(
               this.props.answer,

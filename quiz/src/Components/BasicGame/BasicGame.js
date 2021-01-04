@@ -2,80 +2,116 @@ import React, { Component } from "react";
 import Answer from "./Answer";
 import { getQuestions } from "../../api";
 import "./BasicGame.css";
+import StartAgain from "./StartAgain";
 
 export class BasicGame extends Component {
   state = {
     questions: [],
     allAnswers: [],
     level: 0,
-    answerCorrect: "pending",
+    isAnswerCorrect: "pending",
     chosenAnswer: null,
+    initializing: false,
+    promptActive: false,
+    gameEnd: false,
   };
 
-  async componentDidMount() {
-    const questionsArr = await getQuestions();
-    this.setState({
-      questions: questionsArr,
-      allAnswers: questionsArr[this.state.level]?.incorrect_answers
-        ?.concat(questionsArr[this.state.level]?.correct_answer)
-        .sort(() => 0.5 - Math.random()),
-    });
+  // LIFECYCLE METODE
+
+  // Ova metoda se triggerira kada se komponenta prvi put renderira
+  componentDidMount() {
+    this.initializeGame();
   }
-  updateQuestion = async () => {
-    if (this.state.answerCorrect === "pending") return;
-    this.state.answerCorrect === "true"
-      ? this.setState({
-          level: this.state.level + 1,
-        })
-      : this.setState({
-          level: 0,
-        });
-    this.setState({
-      answerCorrect: "pending",
-      chosenAnswer: null,
-    });
 
-    if (this.state.level > 0) {
-      this.setState({
-        allAnswers: this.state.questions[this.state.level]?.incorrect_answers
-          ?.concat(this.state.questions[this.state.level]?.correct_answer)
-          .sort(() => 0.5 - Math.random()),
-      });
-    } else {
-      const questionsArr = await getQuestions();
-      this.setState({
-        questions: questionsArr,
-        allAnswers: questionsArr[this.state.level]?.incorrect_answers
-          ?.concat(questionsArr[this.state.level]?.correct_answer)
-          .sort(() => 0.5 - Math.random()),
-      });
+  // Ova metoda se triggerira na svaki render osim orvi
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state.isAnswerCorrect === "true" &&
+      this.state.isAnswerCorrect !== prevState.isAnswerCorrect
+    ) {
+      this.handleCorrect();
+    } else if (
+      this.state.isAnswerCorrect === "false" &&
+      this.state.isAnswerCorrect !== prevState.isAnswerCorrect
+    ) {
+      this.handleFalse();
     }
-  };
-  componentDidUpdate() {
-    if (this.state.answerCorrect === "pending") return;
-    setTimeout(() => {
-      this.updateQuestion();
-    }, 2000);
   }
 
   checkIfCorrect = (answer, correctAnswer) => {
-    console.log(answer);
     return answer === correctAnswer
-      ? this.setState({ answerCorrect: "true" })
-      : this.setState({ answerCorrect: "false" });
+      ? this.setState({ isAnswerCorrect: "true" })
+      : this.setState({ isAnswerCorrect: "false" });
   };
 
   handleChoice = (answer) => {
     this.setState({ chosenAnswer: answer });
   };
+
+  handleCorrect = () => {
+    if (this.state.level >= this.state.questions.length - 1) {
+      setTimeout(() => {
+        this.showPrompt();
+      }, 2000);
+      return;
+    }
+    setTimeout(() => {
+      this.updateQuestion();
+    }, 2000);
+  };
+
+  handleFalse = () => {
+    setTimeout(() => {
+      this.showPrompt();
+    }, 2000);
+  };
+
+  initializeGame = async () => {
+    this.setState({
+      initializing: true,
+    });
+    const questionsArr = await getQuestions();
+
+    this.setState({
+      level: 0,
+      isAnswerCorrect: "pending",
+      chosenAnswer: null,
+      promptActive: false,
+      questions: questionsArr,
+      allAnswers: questionsArr[0]?.incorrect_answers
+        ?.concat(questionsArr[0]?.correct_answer)
+        .sort(() => 0.5 - Math.random()),
+      initializing: false,
+    });
+  };
+
+  showPrompt = () => {
+    this.setState({ promptActive: true });
+  };
+
+  updateQuestion = async () => {
+    this.setState({
+      isAnswerCorrect: "pending",
+      chosenAnswer: null,
+      level: this.state.level + 1,
+      allAnswers: this.state.questions[this.state.level + 1]?.incorrect_answers
+        ?.concat(this.state.questions[this.state.level + 1]?.correct_answer)
+        .sort(() => 0.5 - Math.random()),
+    });
+  };
+
   render() {
-    const { questions, level } = this.state;
+    const { questions, level, initializing, promptActive } = this.state;
     const correctAnswer = questions[level]?.correct_answer;
     const incorrectAnswers = questions[level]?.incorrect_answers;
 
     let chosenAnswerColor = null;
-
-    return (
+    if (initializing) {
+      return <h1>LOADING...</h1>;
+    }
+    return !initializing && promptActive ? (
+      <StartAgain initializeGame={() => this.initializeGame} />
+    ) : (
       <div className="question__container">
         <h1 className="question__container__h1">
           {decodeURIComponent(questions[level]?.question)}
@@ -84,7 +120,7 @@ export class BasicGame extends Component {
           {this.state.allAnswers?.map((answer) => (
             <Answer
               answer={answer}
-              answerCorrect={this.state.answerCorrect}
+              isAnswerCorrect={this.state.isAnswerCorrect}
               chosenAnswerColor={chosenAnswerColor}
               chosenAnswer={this.state.chosenAnswer}
               checkIfCorrect={this.checkIfCorrect}
